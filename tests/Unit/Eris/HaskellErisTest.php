@@ -97,7 +97,6 @@ class HaskellErisTest extends TestCase
             ->then(function ($str) {
                 $encoded = base64_encode($str);
                 $expected = base64_decode($encoded);
-                // var_dump(['original'=>$str, 'encoded'=>$encoded]);
                 $this->assertEquals($expected, $str);
             });
     }
