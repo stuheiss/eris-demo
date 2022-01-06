@@ -60,3 +60,29 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+# Eris - property based testing
+
+Don't write tests. Generate them! - John Hughes
+
+## What is this?
+Eris is a PHP port of Haskell's QuickCheck
+
+See this [blog](https://blog.jessitron.com/2013/04/25/property-based-testing-what-is-it/) for an explanation of property based testing.
+
+See this [primer](https://medium.com/@thinkfunctional/a-quickcheck-primer-for-php-developers-5ffbe20c16c8) on QuickCheck for PHP developers.
+
+See the [docs](https://eris.readthedocs.io) for Eris.
+
+See the [source](https://github.com/giorgiosironi/eris) for Eris.
+
+See [this](https://www.youtube.com/watch?v=gPFSZ8oKjco) or [this](https://www.youtube.com/watch?v=hXnS_Xjwk2Y) or [this](https://www.youtube.com/watch?v=zi0rHwfiX1Q) presentation by John Hughes on QuickCheck.
+
+See [this](https://blog.ploeh.dk/2015/01/10/diamond-kata-with-fscheck/) blog on using property based testing for TDD.
+
+## Big idea
+Testing is hard. Thorough testing is impossible. Proving behavior is not the same as testing behavior.
+
+Property based testing seeks to prove that properties for a function will hold for all possible inputs. By generating tests based on properties, a property based testing tool can generate thousands of tests to verify whether the properties hold, or if they don't, it will try to narrow down the failure cases to identify exactly where the failure arose.
+
+The developer is no longer concerned with how to express a specific test to identify correct or incorrect behavior, but rather identify what properties must hold for correct behavior.
