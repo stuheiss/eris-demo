@@ -78,6 +78,8 @@ See the [source](https://github.com/giorgiosironi/eris) for Eris.
 
 See [this](https://www.youtube.com/watch?v=gPFSZ8oKjco) or [this](https://www.youtube.com/watch?v=hXnS_Xjwk2Y) or [this](https://www.youtube.com/watch?v=zi0rHwfiX1Q) presentation by John Hughes on QuickCheck.
 
+See [this](https://www.youtube.com/watch?v=zvRAyq5wj38) John Hughes - How to specify it! A guide to writing properties of pure functions | Code Mesh LDN 19
+
 See [this](https://blog.ploeh.dk/2015/01/10/diamond-kata-with-fscheck/) blog on using property based testing for TDD.
 
 ## Big idea
