@@ -111,9 +111,30 @@ class DiamondErisTest extends TestCase
             });
     }
 
+    /**
+     * @test
+     * @eris-repeat 100
+     *
+     * Property: Diamond is as wide as it is high
+     */
+    public function testDiamondIsAsWideAsItIsHigh()
+    {
+        // $this->withoutExceptionHandling();
+        $this
+            ->forAll(
+                Generator\elements(range("A", "Z"))
+            )
+            ->then(function ($c) {
+                $diamond = Diamond::diamond($c);
+                $rows = count($diamond);
+                foreach ($diamond as $row) {
+                    $this->assertEquals($rows, strlen($row));
+                }
+            });
+    }
+
     // ToDo
     // * All rows must have a symmetric contour
-    // * Diamond is as wide as it is high
     // * All rows except top and bottom have two identical letters
     // * Lower left space is a triangle
     // * Diamond is symetric around the horizontal axis
