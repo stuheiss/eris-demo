@@ -4,19 +4,25 @@ use Eris\Generator;
 use PHPUnit\Framework\TestCase;
 use Illuminate\Foundation\Testing\Concerns\InteractsWithExceptionHandling;
 
-class HaskellErisTest extends TestCase
+class ReverseTest extends TestCase
 {
     use Eris\TestTrait;
     use Tests\GetAnnotations;
     // use InteractsWithExceptionHandling;
 
+    public function __construct()
+    {
+        $this->h = new \App\Models\Reverse;
+        parent::__construct();
+    }
+
     /**
      * @test
      * @eris-repeat 100
      *
-     * Property: sorting a sorted array returns the sorted array values
+     * Property: length of an array is retained when the array is reversed
      */
-    public function testArraySortingIsIdempotent()
+    public function testArrayReversePreserveLength()
     {
         // $this->withoutExceptionHandling();
         $this
@@ -24,10 +30,7 @@ class HaskellErisTest extends TestCase
                 Generator\seq(Generator\nat())
             )
             ->then(function ($array) {
-                sort($array);
-                $expected = $array;
-                sort($array);
-                $this->assertEquals($expected, $array);
+                $this->assertEquals(count($array), count($this->h->reverse($array)));
             });
     }
 
@@ -35,19 +38,17 @@ class HaskellErisTest extends TestCase
      * @test
      * @eris-repeat 100
      *
-     * Property: decoding an encoded string equals the original string
+     * Property: reversing a reversed array returns the original array values
      */
-    public function testDecodeEncodedStringReturnsOriginalString()
+    public function testArrayReverseWillReverseRandomArrays()
     {
         // $this->withoutExceptionHandling();
         $this
             ->forAll(
-                Generator\string()
+                Generator\seq(Generator\nat())
             )
-            ->then(function ($str) {
-                $encoded = base64_encode($str);
-                $expected = base64_decode($encoded);
-                $this->assertEquals($expected, $str);
+            ->then(function ($array) {
+                $this->assertEquals($array, $this->h->reverse($this->h->reverse($array)));
             });
     }
 }
