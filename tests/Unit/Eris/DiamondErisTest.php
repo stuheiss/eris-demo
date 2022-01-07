@@ -133,10 +133,86 @@ class DiamondErisTest extends TestCase
             });
     }
 
-    // ToDo
-    // * All rows must have a symmetric contour
-    // * All rows except top and bottom have two identical letters
-    // * Lower left space is a triangle
-    // * Diamond is symetric around the horizontal axis
+    /**
+     * @test
+     * @eris-repeat 100
+     *
+     * Property: Diamond is horizontally symmetrical
+     */
+    public function testDiamondHorizontalSymmetry()
+    {
+        // $this->withoutExceptionHandling();
+        $this
+            ->forAll(
+                Generator\elements(range("A", "Z"))
+            )
+            ->then(function ($c) {
+                $diamond = Diamond::diamond($c);
+                $rows = count($diamond);
+                $n = intdiv($rows, 2);
+                $top_half = array_slice($diamond, 0, $n);
+                $bottom_half = array_slice($diamond, $n + 1);
+                $this->assertEquals($top_half, array_reverse($bottom_half));
+            });
+    }
 
+    /**
+     * @test
+     * @eris-repeat 100
+     *
+     * Property: Diamond is vertically symmetrical
+     */
+    public function testDiamondVerticalSymmetry()
+    {
+        // $this->withoutExceptionHandling();
+        $this
+            ->forAll(
+                Generator\elements(range("A", "Z"))
+            )
+            ->then(function ($c) {
+                $diamond = Diamond::diamond($c);
+                $rows = count($diamond);
+                $n = intdiv($rows, 2);
+                // get left half of diamond
+                $fn_left_part = fn($s) => substr($s, 0, $n);
+                $left_half = array_map($fn_left_part, $diamond);
+                // get right half of diamond
+                $fn_right_part = fn($s) => substr($s, $n + 1);
+                $right_half = array_map($fn_right_part, $diamond);
+                // assert left half === reversed right half
+                $fn_reverse = fn($s) => strrev($s);
+                $this->assertEquals($left_half, array_map($fn_reverse, $right_half));
+            });
+    }
+
+    /**
+     * @test
+     * @eris-repeat 100
+     *
+     * Property: Diamond rows have expected letter counts
+     */
+    public function testRowsHaveExpectedLetterCounts()
+    {
+        // $this->withoutExceptionHandling();
+        $this
+            ->forAll(
+                Generator\elements(range("A", "Z"))
+            )
+            ->then(function ($c) {
+                $diamond = Diamond::diamond($c);
+                $rows = count($diamond);
+                $fn_no_space = fn($s) => str_replace(" ", "", $s);
+                $letters_only = array_map($fn_no_space, $diamond);
+                foreach ($letters_only as $i => $s) {
+                    if ($i == 0 || $i == $rows - 1) {
+                        $this->assertEquals(1, strlen($s));
+                    } else {
+                        $this->assertEquals(2, strlen($s));
+                    }
+                }
+            });
+    }
+
+    // ToDo
+    // * Lower left space is a triangle
 }
